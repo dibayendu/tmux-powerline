@@ -7,10 +7,43 @@ TMUX_POWERLINE_SEG_MAILCOUNT_GMAIL_SERVER_DEFAULT="gmail.com"
 TMUX_POWERLINE_SEG_MAILCOUNT_GMAIL_INTERVAL_DEFAULT="5"
 
 
+
+# Mailbox type to use. Can be any of {apple_mail, gmail, maildir, mbox, mailcheck}
+export TMUX_POWERLINE_SEG_MAILCOUNT_MAILBOX_TYPE="apple_mail"
+
+## Gmail
+# Enter your Gmail username here WITH OUT @gmail.com.( OR @domain)
+export TMUX_POWERLINE_SEG_MAILCOUNT_GMAIL_USERNAME=""
+# Google password. Recomenned to use application specific password (https://accounts.google.com/b/0/IssuedAuthSubTokens) Leave this empty to get password from OS X keychain.
+# For OSX users : MAKE SURE that you add a key to the keychain in the format as follows
+# Keychain Item name : http://<value-you-fill-in-server-variable-below>
+# Account name : <username-below>@<server-below>
+# Password : Your password ( Once again, try to use 2 step-verification and application-specific password)
+# See http://support.google.com/accounts/bin/answer.py?hl=en&answer=185833 for more info.
+export TMUX_POWERLINE_SEG_MAILCOUNT_GMAIL_PASSWORD=""
+# Domain name that will complete your email. For normal GMail users it probably is "gmail.com but can be "foo.tld" for Google Apps users.
+export TMUX_POWERLINE_SEG_MAILCOUNT_GMAIL_SERVER="${TMUX_POWERLINE_SEG_MAILCOUNT_GMAIL_SERVER_DEFAULT}"
+# How often in minutes to check for new mails.
+export TMUX_POWERLINE_SEG_MAILCOUNT_GMAIL_INTERVAL="${TMUX_POWERLINE_SEG_MAILCOUNT_GMAIL_INTERVAL_DEFAULT}"
+
+## Maildir
+# Path to the maildir to check.
+export TMUX_POWERLINE_SEG_MAILCOUNT_MAILDIR_INBOX="${TMUX_POWERLINE_SEG_MAILCOUNT_MAILDIR_INBOX_DEFAULT}"
+
+## mbox
+# Path to the mbox to check.
+export TMUX_POWERLINE_SEG_MAILCOUNT_MBOX_INBOX="${TMUX_POWERLINE_SEG_MAILCOUNT_MBOX_INBOX_DEFAULT}"
+
+## mailcheck
+# Optional path to mailcheckrc
+export TMUX_POWERLINE_SEG_MAILCOUNT_MAILCHECKRC="${TMUX_POWERLINE_SEG_MAILCOUNT_MAILCHECKRC_DEFAULT}"
+
+
+
 generate_segmentrc() {
 	read -d '' rccontents  << EORC
 # Mailbox type to use. Can be any of {apple_mail, gmail, maildir, mbox, mailcheck}
-export TMUX_POWERLINE_SEG_MAILCOUNT_MAILBOX_TYPE=""
+export TMUX_POWERLINE_SEG_MAILCOUNT_MAILBOX_TYPE="apple_mail"
 
 ## Gmail
 # Enter your Gmail username here WITH OUT @gmail.com.( OR @domain)
@@ -186,9 +219,9 @@ __count_mbox() {
 }
 
 __mac_keychain_get_pass() {
-	result="$(security 2>&1 > /dev/null find-internet-password -ga $1 -s $2)"
+	result=$(security 2>&1 > /dev/null find-internet-password -ga $1 -s $2)
 	if [ $? -eq 0 ]; then
-		TMUX_POWERLINE_SEG_MAILCOUNT_GMAIL_PASSWORD=$(echo "$result" | sed -e 's/password: \"\(.*\)\"/\1/g')
+		TMUX_POWERLINE_SEG_MAILCOUNT_GMAIL_PASSWORD=$(echo $result | sed -e 's/password: \"\(.*\)\"/\1/g')
 		return 0
 	fi
 	return 1

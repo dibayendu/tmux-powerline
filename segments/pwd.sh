@@ -6,6 +6,8 @@ source "${TMUX_POWERLINE_DIR_LIB}/tmux_adapter.sh"
 
 TMUX_POWERLINE_SEG_PWD_MAX_LEN_DEFAULT="40"
 
+export TMUX_POWERLINE_SEG_PWD_MAX_LEN="${TMUX_POWERLINE_SEG_PWD_MAX_LEN_DEFAULT}"
+
 generate_segmentrc() {
 	read -d '' rccontents  << EORC
 # Maximum length of output.

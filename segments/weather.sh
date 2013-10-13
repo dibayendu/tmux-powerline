@@ -12,6 +12,18 @@ else
     TMUX_POWERLINE_SEG_WEATHER_GREP_DEFAULT="grep"
 fi
 
+export TMUX_POWERLINE_SEG_WEATHER_DATA_PROVIDER="yahoo"
+# What unit to use. Can be any of {c,f,k}.
+export TMUX_POWERLINE_SEG_WEATHER_UNIT="c"
+# How often to update the weather in seconds.
+export TMUX_POWERLINE_SEG_WEATHER_UPDATE_PERIOD="600"
+# Name of GNU grep binary if in PATH, or path to it.
+export TMUX_POWERLINE_SEG_WEATHER_GREP="grep"
+# Your location. Find a code that works for you:
+# 1. Go to Yahoo weather http://weather.yahoo.com/
+# 2. Find the weather for you location
+# 3. Copy the last numbers in that URL. e.g. "http://weather.yahoo.com/united-states/california/newport-beach-12796587/" has the numbers "12796587"
+export TMUX_POWERLINE_SEG_WEATHER_LOCATION="1103816"
 
 generate_segmentrc() {
 	read -d '' rccontents  << EORC
@@ -28,7 +40,7 @@ export TMUX_POWERLINE_SEG_WEATHER_GREP="${TMUX_POWERLINE_SEG_WEATHER_GREP_DEFAUL
 # 1. Go to Yahoo weather http://weather.yahoo.com/
 # 2. Find the weather for you location
 # 3. Copy the last numbers in that URL. e.g. "http://weather.yahoo.com/united-states/california/newport-beach-12796587/" has the numbers "12796587"
-export TMUX_POWERLINE_SEG_WEATHER_LOCATION=""
+export TMUX_POWERLINE_SEG_WEATHER_LOCATION="1103816"
 EORC
 	echo "$rccontents"
 }
